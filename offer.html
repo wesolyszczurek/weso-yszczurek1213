@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta | WMS NextGen</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Dodatkowy styl dla siatki oferty */
+        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; padding: 5rem 5%; background: var(--gray); }
+        .offer-item { background: white; padding: 3rem; transition: var(--transition); border: 1px solid transparent; }
+        .offer-item:hover { border-color: var(--primary); transform: translateY(-10px); }
+        .offer-num { font-size: 3rem; font-weight: 900; color: var(--accent); margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+    <div class="logo">WMS<span>.LOGIC</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html#hero">Start</a></li>
+        <li><a href="about.html">O nas</a></li>
+        <li><a href="offer.html">Oferta</a></li>
+        <li><a href="demo-app.html" class="nav-cta">URUCHOM WMS</a></li>
+        <li><a href="contact.html">Kontakt</a></li>
+    </ul>
+</nav>
+
+    <header class="hero sub-hero">
+        <div class="hero-content">
+            <h1 class="reveal-text">Solutions</h1>
+            <h2 class="sub-title">MODUŁY DOPASOWANE DO CIEBIE</h2>
+        </div>
+    </header>
+
+    <section class="offer-grid">
+        <div class="offer-item">
+            <div class="offer-num">01</div>
+            <h3>Inventory Pro</h3>
+            <p>Pełna kontrola stanów w czasie rzeczywistym z obsługą kodów SKU i EAN.</p>
+        </div>
+        <div class="offer-item">
+            <div class="offer-num">02</div>
+            <h3>AI Analytics</h3>
+            <p>Algorytmy przewidujące zapotrzebowanie i optymalizujące ścieżki kompletacji.</p>
+        </div>
+        <div class="offer-item">
+            <div class="offer-num">03</div>
+            <h3>Cloud Sync</h3>
+            <p>Dostęp do danych z dowolnego miejsca na świecie, bez potrzeby własnych serwerów.</p>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>

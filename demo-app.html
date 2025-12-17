@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel WMS | Demo Systemu</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --sidebar-width: 280px; }
+        body { background: var(--gray); display: flex; min-height: 100vh; }
+        
+        /* Sidebar Layout */
+        .sidebar { width: var(--sidebar-width); background: var(--primary); color: white; padding: 2rem; position: fixed; height: 100vh; }
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 3rem; }
+        
+        /* Stats Cards */
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .stat-card { background: white; padding: 1.5rem; border-left: 5px solid var(--accent); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .stat-card h5 { text-transform: uppercase; font-size: 0.7rem; color: #888; margin-bottom: 0.5rem; }
+        .stat-card span { font-size: 1.8rem; font-weight: 900; }
+
+        /* Custom Table UI */
+        .dashboard-table { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .table-header { padding: 1.5rem 2rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Inventory Item Styles */
+        .qty-badge { background: #eef2f7; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; }
+        .low-stock { color: #e74c3c; background: #fdf2f2; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo" style="color: white; margin-bottom: 3rem;">WMS<span>.LOGIC</span></div>
+        <nav>
+            <ul class="nav-links" style="flex-direction: column; gap: 1.5rem;">
+                <li><a href="index.html" style="color: #aaa;">← Powrót do strony</a></li>
+                <li><a href="#" style="color: white;">Dashboard</a></li>
+                <li><a href="offer.html" style="color: #aaa;">Moduły</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header style="margin-bottom: 3rem;">
+            <h1 style="font-size: 2.5rem; font-weight: 900;">Magazyn Główny</h1>
+            <p style="color: #666;">Zarządzaj zapasami i monitoruj ruchy towarowe w czasie rzeczywistym.</p>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <h5>Wszystkie Indeksy</h5>
+                <span id="total-items">0</span>
+            </div>
+            <div class="stat-card">
+                <h5>Suma Sztuk</h5>
+                <span id="total-qty">0</span>
+            </div>
+            <div class="stat-card" style="border-left-color: #ffcc00;">
+                <h5>Niski Stan (< 10)</h5>
+                <span id="low-stock-count">0</span>
+            </div>
+        </div>
+
+        <div class="demo-grid" style="grid-template-columns: 350px 1fr;">
+            <div class="demo-card" style="height: fit-content;">
+                <h4 style="margin-bottom: 1.5rem;">Przyjęcie Zewnętrzne (PZ)</h4>
+                <form id="wms-form">
+                    <label style="font-size: 0.8rem; font-weight: 700;">PRODUKT</label>
+                    <input type="text" id="itemName" placeholder="np. Paleta drewniana" required>
+                    
+                    <label style="font-size: 0.8rem; font-weight: 700;">KATEGORIA</label>
+                    <select id="itemCategory" style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; font-family: inherit;">
+                        <option value="Surowce">Surowce</option>
+                        <option value="Produkty Gotowe">Produkty Gotowe</option>
+                        <option value="Nośniki">Nośniki</option>
+                        <option value="Opakowania">Opakowania</option>
+                    </select>
+
+                    <label style="font-size: 0.8rem; font-weight: 700;">ILOŚĆ</label>
+                    <input type="number" id="itemQty" placeholder="Ilość sztuk" required>
+                    
+                    <label style="font-size: 0.8rem; font-weight: 700;">IDENTYFIKATOR SKU</label>
+                    <input type="text" id="itemSku" placeholder="WMS-XXXX" required>
+                    
+                    <button type="submit" class="btn-add" style="width: 100%;">ZAKSIĘGUJ TOWAR</button>
+                </form>
+            </div>
+
+            <div class="dashboard-table">
+                <div class="table-header">
+                    <h4 style="margin: 0;">Inwentaryzacja Bieżąca</h4>
+                    <button class="btn-main" onclick="clearInventory()" style="padding: 0.5rem 1rem; font-size: 0.7rem; background: #eee; color: #333;">WYCZYŚĆ BAZĘ</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Produkt / Kategoria</th>
+                            <th>Stan</th>
+                            <th>Operacje</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="demo.js"></script>
+    <script>
+        // Dodatkowa funkcja czyszczenia demo
+        function clearInventory() {
+            if(confirm('Czy na pewno chcesz usunąć wszystkie dane z LocalStorage?')) {
+                localStorage.removeItem('wms_inventory');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
